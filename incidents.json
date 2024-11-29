@@ -1,0 +1,17 @@
+{
+  "INCIDENTS": {},
+  "INC000001": {
+    "incidentNumber": "INC000001",
+    "incidentCaller": "cat.woman@example.com",
+    "incidentAssignmentGroup": "BATMAN_HELP",
+    "incidentShortDescription": "Where the hell are you?",
+    "incidentWorkNotes": "Don't tell me you are obsessing over that eggplant."
+  },
+  "INC000002": {
+    "incidentNumber": "INC000002",
+    "incidentCaller": "Poison.Ivy@example.com",
+    "incidentAssignmentGroup": "BATMAN_HELP",
+    "incidentShortDescription": "See you next time Fruit Bat.",
+    "incidentWorkNotes": "Tell that kitty to mind her own business."
+  }
+}

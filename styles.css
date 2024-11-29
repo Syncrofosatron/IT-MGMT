@@ -1,0 +1,37 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.centered-div {
+    display: flex;
+    flex-direction: column; /* Makes the child elements stack vertically */
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+}
+
+h1 {
+    margin-bottom: 20px; /* Adjust this value as needed */
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 10px; /* Adds some space between buttons */
+}
+
+button {
+    width: 200px; /* Optional: Set a fixed width for buttons */
+}
+
+td {
+    padding-left: 50px;
+}
+
+.cards {
+    padding: 10px;
+    margin: 10px;
+}
