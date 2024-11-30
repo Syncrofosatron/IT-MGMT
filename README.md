@@ -3,7 +3,7 @@ That's great to hear that you've built a Node.js app for creating and searching 
 ### **Basic Enhancements**
 
 1. **Create, Edit, and Delete Incidents**:
-   - **Edit Tickets**: Allow users to edit details of an existing ticket, such as description, priority, or status.
+   - ~~**Edit Tickets**: Allow users to edit details of an existing ticket, such as description, priority, or status.~~
    - **Delete Tickets**: Add functionality to delete a ticket when it’s resolved or no longer necessary.
    - **Status Updates**: Implement a feature to update the status of tickets (e.g., "Open", "In Progress", "Resolved", "Closed").
 
