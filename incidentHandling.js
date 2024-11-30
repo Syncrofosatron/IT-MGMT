@@ -9,6 +9,10 @@ const port = 666;
 let myVariable = 1;
 let incidentNumber = "";
 
+// this variable will get incident number when user search for one, and then
+// this will be so that the user can edit the incident details in question.
+let incidentNumberEdit = "";
+
 app.set("views", "./views");
 app.set("view engine", "ejs");
 
@@ -33,8 +37,36 @@ app.get("/incident-create", function (req, res) {
     }
 
     // Render the page after determining the correct incidentNumber
-    res.render("incidentCreate.ejs", { incidentNumber });
+    res.render("incidentCreate", { incidentNumber });
   });
+});
+
+app.get("/incident-edit", function(req, res) {
+  var incNumber = incidentNumberEdit;
+  const directoryPath = "D:/WebDev/IT Mgmt alt/";
+  const fileName = "incidents.json";
+  const filePath = path.join(directoryPath, fileName);
+
+  if (fs.existsSync(filePath)) {
+    fs.readFile(filePath, "utf-8", (err, data) => {
+      if (err) {
+        console.error("Error reading file: ", err);
+        res.status(500).send("Error reading file");
+        return;
+      }
+      const found = data.includes(incNumber);
+      if (found) {
+        const jsonData = JSON.parse(data);
+        const incidentData = jsonData[incNumber];
+        res.render("incidentEdit.ejs", { incidentData });
+      } else {
+        res.send("No incident found with ID: " + incNumber);
+      }
+    });
+  } else {
+    console.log("File not found:", filePath);
+    res.status(404).send("File not found");
+  }
 });
 
 app.post("/incident-create", (req, res) => {
@@ -79,6 +111,7 @@ app.post("/incident-create", (req, res) => {
 // Endpoint to check incident
 app.post("/incident-search", function (req, res) {
   var incNumber = req.body.incNumberInput;
+  incidentNumberEdit = incNumber;
   const directoryPath = "D:/WebDev/IT Mgmt alt/";
   const fileName = "incidents.json";
   const filePath = path.join(directoryPath, fileName);
