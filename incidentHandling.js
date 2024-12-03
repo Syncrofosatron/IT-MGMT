@@ -126,14 +126,21 @@ app.get("/incident-list", function(req, res) {
       const found = data.includes(incNumber);
       if (found) {
         const page = parseInt(req.query.page) || 1;
-        const pageSize = 1;
+        const pageSize = 5;
         incidentData = JSON.parse(data);
         const incidentEntries = Object.entries(incidentData).filter(([key, value]) => key != "INCIDENTS");
         const totalItems = incidentEntries.length;
         const totalPages = Math.ceil(totalItems/pageSize);
-        const startIndex = (page) * pageSize;
-        const endIndex = page * page;
+        const startIndex = (page - 1) * pageSize;
+        const endIndex = page * pageSize;
         const paginatedIncidents = incidentEntries.slice(startIndex, endIndex);
+
+console.log("incidentEntries:", incidentEntries); // Logs all incident entries excluding "INCIDENTS" key
+console.log("totalItems:", totalItems); // Logs the total number of items
+console.log("totalPages:", totalPages); // Logs the total number of pages
+console.log("startIndex:", startIndex); // Logs the starting index for pagination
+console.log("endIndex:", endIndex); // Logs the ending index for pagination
+console.log("paginatedIncidents:", paginatedIncidents); // Logs the incidents for the current page
         
         if (page < 1) return res.redirect('/incident-list?page=1');
         if (page > totalPages) return res.redirect(`/incident-list?page=${totalPages}`);

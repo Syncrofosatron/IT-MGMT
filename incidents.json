@@ -23,10 +23,10 @@
   },
   "INC000004": {
     "incidentNumber": "INC000004",
-    "incidentCaller": "Monty Python",
-    "incidentAssignmentGroup": "HOLY_GRAIL",
-    "incidentShortDescription": "Never end war with the demon inside me.",
-    "incidentWorkNotes": "Excalibur need."
+    "incidentCaller": "SpongeBob@example.com",
+    "incidentAssignmentGroup": "BIKINI_BOTTOM",
+    "incidentShortDescription": "Squidward is a real mood, always lookingn like hospital wards.",
+    "incidentWorkNotes": "Is he a squid?"
   },
   "INC000005": {
     "incidentNumber": "INC000005",
@@ -36,24 +36,24 @@
     "incidentWorkNotes": "Did I just say it is blank?!"
   },
   "INC000006": {
-    "incident_number": "INC000006",
-    "incident_caller": "mike.myers@example.com",
-    "incident_shortDescription": "He is wearing a creepy mask and it's not even Halloween!",
-    "incident_assignmentGroup": "LIFE_SAVER",
+    "incidentNumber": "INC000006",
+    "incidentCaller": "mike.myers@example.com",
+    "incidentShortDescription": "He is wearing a creepy mask and it's not even Halloween!",
+    "incidentAssignmentGroup": "LIFE_SAVER",
     "incidentWorkNotes": "Forget it, that was just our janitor wearing a protection mask."
   },
   "INC000007": {
-    "incident_number": "INC000007",
-    "incident_caller": "meghan.fox@example.com",
-    "incident_shortDescription": "When is a good new Transformers movie coming out?!",
-    "incident_assignmentGroup": "QUERY_SOLVER",
+    "incidentNumber": "INC000007",
+    "incidentCaller": "meghan.fox@example.com",
+    "incidentShortDescription": "When is a good new Transformers movie coming out?!",
+    "incidentAssignmentGroup": "QUERY_SOLVER",
     "incidentWorkNotes": "Gosh just forget it, proabably it's too much to ask at this age."
   },
   "INC000008": {
-    "incident_number": "INC000008",
-    "incident_caller": "ivan.terrible@example.com",
-    "incident_shortDescription": "Zdorov moy chel, tyi kruto ochen.",
-    "incident_assignmentGroup": "FOREIGN_QUESTION",
+    "incidentNumber": "INC000008",
+    "incidentCaller": "ivan.terrible@example.com",
+    "incidentShortDescription": "Zdorov moy krasivaya devushka, tyi kruto ochen ❤.",
+    "incidentAssignmentGroup": "FOREIGN_QUESTION",
     "incidentWorkNotes": "Ya nye shutki, tyi kruto ochen realno moya krasivaya chel da."
   }
 }
