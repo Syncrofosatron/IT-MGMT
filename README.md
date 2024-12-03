@@ -13,7 +13,7 @@ That's great to hear that you've built a Node.js app for creating and searching 
    - **Sort by Date or Priority**: Add sorting options to sort tickets by creation date, last modified, or priority.
 
 3. **Pagination**:
-   - Implement pagination for the list of incidents. If you have a lot of tickets, breaking them into pages improves performance and usability.
+   - ~~Implement pagination for the list of incidents. If you have a lot of tickets, breaking them into pages improves performance and usability.~~
 
 4. **Search by Keyword**:
    - Implement a search bar that allows users to search by keywords within the ticket description, incident number, or other fields.
