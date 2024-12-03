@@ -35,3 +35,7 @@ td {
     padding: 10px;
     margin: 10px;
 }
+
+.--bs-primary-border-subtle {
+    margin: 20px;
+}

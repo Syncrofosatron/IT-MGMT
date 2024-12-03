@@ -13,5 +13,47 @@
     "incidentAssignmentGroup": "BATMAN_HELP",
     "incidentShortDescription": "See you next time Fruit Bat.",
     "incidentWorkNotes": "Tell that kitty to mind her own business."
+  },
+  "INC000003": {
+    "incidentNumber": "INC000003",
+    "incidentCaller": "Monty Python",
+    "incidentAssignmentGroup": "HOLY_GRAIL",
+    "incidentShortDescription": "Never end war with the demon inside me.",
+    "incidentWorkNotes": "Excalibur need."
+  },
+  "INC000004": {
+    "incidentNumber": "INC000004",
+    "incidentCaller": "Monty Python",
+    "incidentAssignmentGroup": "HOLY_GRAIL",
+    "incidentShortDescription": "Never end war with the demon inside me.",
+    "incidentWorkNotes": "Excalibur need."
+  },
+  "INC000005": {
+    "incidentNumber": "INC000005",
+    "incidentCaller": "Tai.Chi@example.com",
+    "incidentAssignmentGroup": "INNER_CHI",
+    "incidentShortDescription": "Panda has stolen the secret scroll that is blank and we want to know what it contains!",
+    "incidentWorkNotes": "Did I just say it is blank?!"
+  },
+  "INC000006": {
+    "incident_number": "INC000006",
+    "incident_caller": "mike.myers@example.com",
+    "incident_shortDescription": "He is wearing a creepy mask and it's not even Halloween!",
+    "incident_assignmentGroup": "LIFE_SAVER",
+    "incidentWorkNotes": "Forget it, that was just our janitor wearing a protection mask."
+  },
+  "INC000007": {
+    "incident_number": "INC000007",
+    "incident_caller": "meghan.fox@example.com",
+    "incident_shortDescription": "When is a good new Transformers movie coming out?!",
+    "incident_assignmentGroup": "QUERY_SOLVER",
+    "incidentWorkNotes": "Gosh just forget it, proabably it's too much to ask at this age."
+  },
+  "INC000008": {
+    "incident_number": "INC000008",
+    "incident_caller": "ivan.terrible@example.com",
+    "incident_shortDescription": "Zdorov moy chel, tyi kruto ochen.",
+    "incident_assignmentGroup": "FOREIGN_QUESTION",
+    "incidentWorkNotes": "Ya nye shutki, tyi kruto ochen realno moya krasivaya chel da."
   }
 }

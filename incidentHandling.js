@@ -69,6 +69,91 @@ app.get("/incident-edit", function(req, res) {
   }
 });
 
+app.post("/incident-edit", function(req, res) {
+  const incidentData = {
+    incidentNumber: incidentNumberEdit,
+    incidentCaller: req.body.incidentCaller,
+    incidentAssignmentGroup: req.body.incidentAssignmentGroup,
+    incidentShortDescription: req.body.incidentShortDescription,
+    incidentWorkNotes: req.body.incidentWorkNotes,
+  };
+
+  const filePath = "incidents.json";
+  fs.readFile(filePath, "utf8", (err, data) => {
+    let jsonData = { INCIDENTS: {} };
+
+    if (!err && data) {
+      jsonData = JSON.parse(data); // Parse existing data if it exists
+    }
+    console.log("jsonData" + jsonData);
+
+    // Add the new incident to the INCIDENTS object
+    jsonData[incidentNumberEdit] = incidentData;
+    console.log("jsonData[incidentNumber]" + jsonData[incidentNumber]);
+
+    // Convert the updated JSON data to a formatted string
+    const updatedJson = JSON.stringify(jsonData, null, 2);
+    console.log("updatedJson" + updatedJson);
+
+
+  fs.writeFile(filePath, updatedJson, "utf8", (err) => {
+    if (err) {
+      console.error("Error writing to file:", err);
+      res.status(500).send("Error processing form data");
+    } else {
+      console.log("Data written to file");
+      res.send(
+        "Incident has been updated successfully. <br> IT MGMT: <a href='http://localhost:666/index.html'>Click here</a>"
+      );
+    }
+  });
+});
+});
+
+app.get("/incident-list", function(req, res) {
+  var incNumber = incidentNumberEdit;
+  const directoryPath = "D:/WebDev/IT Mgmt alt/";
+  const fileName = "incidents.json";
+  const filePath = path.join(directoryPath, fileName);
+
+  if (fs.existsSync(filePath)) {
+    fs.readFile(filePath, "utf-8", (err, data) => {
+      if (err) {
+        console.error("Error reading file: ", err);
+        res.status(500).send("Error reading file");
+        return;
+      }
+      const found = data.includes(incNumber);
+      if (found) {
+        const page = parseInt(req.query.page) || 1;
+        const pageSize = 1;
+        incidentData = JSON.parse(data);
+        const incidentEntries = Object.entries(incidentData).filter(([key, value]) => key != "INCIDENTS");
+        const totalItems = incidentEntries.length;
+        const totalPages = Math.ceil(totalItems/pageSize);
+        const startIndex = (page) * pageSize;
+        const endIndex = page * page;
+        const paginatedIncidents = incidentEntries.slice(startIndex, endIndex);
+        
+        if (page < 1) return res.redirect('/incident-list?page=1');
+        if (page > totalPages) return res.redirect(`/incident-list?page=${totalPages}`);
+
+        res.render('incidentList', {
+          incidents: paginatedIncidents.map(([id, incident]) => ({ id, ...incident })),
+          totalItems,
+          totalPages,
+          currentPage: page
+        });
+      } else {
+        res.send("No incident found with ID: " + incNumber);
+      }
+    });
+  } else {
+    console.log("File not found:", filePath);
+    res.status(404).send("File not found");
+  }
+});
+
 app.post("/incident-create", (req, res) => {
   // Just do the below when the incident number is not found, if found, only then increase the value.
   const incidentData = {

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Incident List with Pagination</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .pagination { margin-top: 20px; }
+    .pagination button { margin: 5px; padding: 10px 15px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Incident List</h1>
+  <ul>
+    <% incidents.forEach(function(incident) { %>
+      <li>
+        <strong>Incident Number:</strong> <%= incident.incidentNumber %><br>
+        <strong>Caller:</strong> <%= incident.incidentCaller %><br>
+        <strong>Assignment Group:</strong> <%= incident.incidentAssignmentGroup %><br>
+        <strong>Description:</strong> <%= incident.incidentShortDescription %><br>
+        <strong>Work Notes:</strong> <%= incident.incidentWorkNotes %>
+      </li>
+    <% }); %>
+  </ul>
+
+  <div class="pagination">
+    <% if (currentPage > 1) { %>
+      <a href="/incident-list?page=<%= currentPage - 1 %>">
+        <button>Prev</button>
+      </a>
+    <% } else { %>
+      <button disabled>Prev</button>
+    <% } %>
+
+    <span>Page <%= currentPage %> of <%= totalPages %></span>
+
+    <% if (currentPage < totalPages) { %>
+      <a href="/incident-list?page=<%= currentPage + 1 %>">
+        <button>Next</button>
+      </a>
+    <% } else { %>
+      <button disabled>Next</button>
+    <% } %>
+  </div>
+  <script src="../incidentHandling.js"></script>
+</body>
+</html>
