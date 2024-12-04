@@ -69,6 +69,34 @@ app.get("/incident-edit", function(req, res) {
   }
 });
 
+app.get("/incident-edit-list", function(req, res) {
+  var incNumber = req.query.incidentNumber;
+  const directoryPath = "D:/WebDev/IT Mgmt alt/";
+  const fileName = "incidents.json";
+  const filePath = path.join(directoryPath, fileName);
+
+  if (fs.existsSync(filePath)) {
+    fs.readFile(filePath, "utf-8", (err, data) => {
+      if (err) {
+        console.error("Error reading file: ", err);
+        res.status(500).send("Error reading file");
+        return;
+      }
+      const found = data.includes(incNumber);
+      if (found) {
+        const jsonData = JSON.parse(data);
+        const incidentData = jsonData[incNumber];
+        res.render("incidentEdit.ejs", { incidentData });
+      } else {
+        res.send("No incident found with ID: " + incNumber);
+      }
+    });
+  } else {
+    console.log("File not found:", filePath);
+    res.status(404).send("File not found");
+  }
+});
+
 app.post("/incident-edit", function(req, res) {
   const incidentData = {
     incidentNumber: incidentNumberEdit,
@@ -134,13 +162,6 @@ app.get("/incident-list", function(req, res) {
         const startIndex = (page - 1) * pageSize;
         const endIndex = page * pageSize;
         const paginatedIncidents = incidentEntries.slice(startIndex, endIndex);
-
-console.log("incidentEntries:", incidentEntries); // Logs all incident entries excluding "INCIDENTS" key
-console.log("totalItems:", totalItems); // Logs the total number of items
-console.log("totalPages:", totalPages); // Logs the total number of pages
-console.log("startIndex:", startIndex); // Logs the starting index for pagination
-console.log("endIndex:", endIndex); // Logs the ending index for pagination
-console.log("paginatedIncidents:", paginatedIncidents); // Logs the incidents for the current page
         
         if (page < 1) return res.redirect('/incident-list?page=1');
         if (page > totalPages) return res.redirect(`/incident-list?page=${totalPages}`);
