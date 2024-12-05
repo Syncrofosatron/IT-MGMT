@@ -2,6 +2,7 @@ const express = require("express");
 const fs = require("fs");
 const bodyParser = require("body-parser");
 const path = require("path");
+const session = require("express-session");
 
 const app = express();
 const port = 666;
@@ -25,20 +26,33 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname))); // Serve static files
 
+app.use(session({
+  secret: 'your_secret_key', // Secret key to sign the session ID cookie
+  resave: false,             // Prevent session from being saved if unmodified
+  saveUninitialized: true,   // Save uninitialized session (new session)
+  cookie: { 
+    maxAge: 1 * 60 * 1000  // Set session expiry time
+  }
+}));
+
 app.post("/incident-login", function (req, res) {
   const { username, password } = req.body;
   const user = users.find((u) => u.username === username);
   const pass = users.find((p) => p.password === password);
   if (user && pass) {
+    req.session.user = user;
     console.log(`User ${username} logged in successfully!`);
     res.sendFile(__dirname + "/incidentPortal.html"); // Redirect to index page if login is successful
   } else {
     console.log("Invalid username or password");
-    res.redirect("/index.html"); // Redirect back to login page on failure
+    res.redirect("/index-incorrect-creds.html"); // Redirect back to login page on failure
   }
 });
 
 app.get("/incident-create", function (req, res) {
+  if (!req.session.user) {
+    return res.redirect("/index.html"); // Redirect to login if no session
+  }
   incidentNumber = `INC${myVariable.toString().padStart(6, "0")}`;
 
   const filePath = "incidents.json";
@@ -60,6 +74,9 @@ app.get("/incident-create", function (req, res) {
 });
 
 app.get("/incident-edit", function (req, res) {
+  if (!req.session.user) {
+    return res.redirect("/index.html"); // Redirect to login if no session
+  }
   var incNumber = incidentNumberEdit;
   const directoryPath = "D:/WebDev/IT Mgmt alt/";
   const fileName = "incidents.json";
@@ -88,6 +105,9 @@ app.get("/incident-edit", function (req, res) {
 });
 
 app.get("/incident-edit-list", function (req, res) {
+  if (!req.session.user) {
+    return res.redirect("/index.html"); // Redirect to login if no session
+  }
   var incNumber = req.query.incidentNumber;
   const directoryPath = "D:/WebDev/IT Mgmt alt/";
   const fileName = "incidents.json";
@@ -116,6 +136,9 @@ app.get("/incident-edit-list", function (req, res) {
 });
 
 app.post("/incident-edit", function (req, res) {
+  if (!req.session.user) {
+    return res.redirect("/index.html"); // Redirect to login if no session
+  }
   const incidentData = {
     incidentNumber: incidentNumberEdit,
     incidentCaller: req.body.incidentCaller,
@@ -272,6 +295,16 @@ app.post("/incident-search", function (req, res) {
     console.log("File not found:", filePath);
     res.status(404).send("File not found");
   }
+});
+
+app.post("/incident-logout", function(req, res)
+{
+  req.session.destroy((err) => {
+    if (err) {
+        return res.status(500).send('Error while logging out');
+    }
+    res.redirect('/index.html'); // Redirect to login page after session is destroyed
+});
 });
 
 app.listen(port, () => {
