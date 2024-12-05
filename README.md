@@ -19,7 +19,7 @@ That's great to hear that you've built a Node.js app for creating and searching 
    - Implement a search bar that allows users to search by keywords within the ticket description, incident number, or other fields.
 
 5. **User Authentication**:
-   - Add **user authentication** (sign-up/login) so that only authenticated users can create, view, or update incidents. You could use libraries like **Passport.js** or **JWT (JSON Web Tokens)** for this.
+   - ~~Add **user authentication** (sign-up/login) so that only authenticated users can create, view, or update incidents. You could use libraries like **Passport.js** or **JWT (JSON Web Tokens)** for this.~~
 
 ### **Intermediate Improvements**
 
