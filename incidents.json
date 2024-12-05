@@ -55,5 +55,12 @@
     "incidentShortDescription": "Zdorov moy krasivaya devushka, tyi kruto ochen ❤.",
     "incidentAssignmentGroup": "FOREIGN_QUESTION",
     "incidentWorkNotes": "Ya nye shutki, tyi kruto ochen realno moya krasivaya chel da."
+  },
+  "INC000009": {
+    "incidentNumber": "INC000009",
+    "incidentCaller": "john.constantine@example.com",
+    "incidentAssignmentGroup": "MAGIC_BADDIE",
+    "incidentShortDescription": "What is this big green bloke? And who is this guy called Strange?",
+    "incidentWorkNotes": "Zatanna, I think I messed up... Need your help."
   }
 }

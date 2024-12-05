@@ -13,12 +13,30 @@ let incidentNumber = "";
 // this will be so that the user can edit the incident details in question.
 let incidentNumberEdit = "";
 
+const users = [
+  { username: "admin", password: "lol12wego21", role: "admin" },
+  { username: "user", password: "imnotadmin", role: "user" },
+];
+
 app.set("views", "./views");
 app.set("view engine", "ejs");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname))); // Serve static files
+
+app.post("/incident-login", function (req, res) {
+  const { username, password } = req.body;
+  const user = users.find((u) => u.username === username);
+  const pass = users.find((p) => p.password === password);
+  if (user && pass) {
+    console.log(`User ${username} logged in successfully!`);
+    res.sendFile(__dirname + "/incidentPortal.html"); // Redirect to index page if login is successful
+  } else {
+    console.log("Invalid username or password");
+    res.redirect("/index.html"); // Redirect back to login page on failure
+  }
+});
 
 app.get("/incident-create", function (req, res) {
   incidentNumber = `INC${myVariable.toString().padStart(6, "0")}`;
@@ -41,7 +59,7 @@ app.get("/incident-create", function (req, res) {
   });
 });
 
-app.get("/incident-edit", function(req, res) {
+app.get("/incident-edit", function (req, res) {
   var incNumber = incidentNumberEdit;
   const directoryPath = "D:/WebDev/IT Mgmt alt/";
   const fileName = "incidents.json";
@@ -69,7 +87,7 @@ app.get("/incident-edit", function(req, res) {
   }
 });
 
-app.get("/incident-edit-list", function(req, res) {
+app.get("/incident-edit-list", function (req, res) {
   var incNumber = req.query.incidentNumber;
   const directoryPath = "D:/WebDev/IT Mgmt alt/";
   const fileName = "incidents.json";
@@ -97,7 +115,7 @@ app.get("/incident-edit-list", function(req, res) {
   }
 });
 
-app.post("/incident-edit", function(req, res) {
+app.post("/incident-edit", function (req, res) {
   const incidentData = {
     incidentNumber: incidentNumberEdit,
     incidentCaller: req.body.incidentCaller,
@@ -123,22 +141,21 @@ app.post("/incident-edit", function(req, res) {
     const updatedJson = JSON.stringify(jsonData, null, 2);
     console.log("updatedJson" + updatedJson);
 
-
-  fs.writeFile(filePath, updatedJson, "utf8", (err) => {
-    if (err) {
-      console.error("Error writing to file:", err);
-      res.status(500).send("Error processing form data");
-    } else {
-      console.log("Data written to file");
-      res.send(
-        "Incident has been updated successfully. <br> IT MGMT: <a href='http://localhost:666/index.html'>Click here</a>"
-      );
-    }
+    fs.writeFile(filePath, updatedJson, "utf8", (err) => {
+      if (err) {
+        console.error("Error writing to file:", err);
+        res.status(500).send("Error processing form data");
+      } else {
+        console.log("Data written to file");
+        res.send(
+          "Incident has been updated successfully. <br> IT MGMT: <a href='http://localhost:666/index.html'>Click here</a>"
+        );
+      }
+    });
   });
 });
-});
 
-app.get("/incident-list", function(req, res) {
+app.get("/incident-list", function (req, res) {
   var incNumber = incidentNumberEdit;
   const directoryPath = "D:/WebDev/IT Mgmt alt/";
   const fileName = "incidents.json";
@@ -156,21 +173,27 @@ app.get("/incident-list", function(req, res) {
         const page = parseInt(req.query.page) || 1;
         const pageSize = 5;
         incidentData = JSON.parse(data);
-        const incidentEntries = Object.entries(incidentData).filter(([key, value]) => key != "INCIDENTS");
+        const incidentEntries = Object.entries(incidentData).filter(
+          ([key, value]) => key != "INCIDENTS"
+        );
         const totalItems = incidentEntries.length;
-        const totalPages = Math.ceil(totalItems/pageSize);
+        const totalPages = Math.ceil(totalItems / pageSize);
         const startIndex = (page - 1) * pageSize;
         const endIndex = page * pageSize;
         const paginatedIncidents = incidentEntries.slice(startIndex, endIndex);
-        
-        if (page < 1) return res.redirect('/incident-list?page=1');
-        if (page > totalPages) return res.redirect(`/incident-list?page=${totalPages}`);
 
-        res.render('incidentList', {
-          incidents: paginatedIncidents.map(([id, incident]) => ({ id, ...incident })),
+        if (page < 1) return res.redirect("/incident-list?page=1");
+        if (page > totalPages)
+          return res.redirect(`/incident-list?page=${totalPages}`);
+
+        res.render("incidentList", {
+          incidents: paginatedIncidents.map(([id, incident]) => ({
+            id,
+            ...incident,
+          })),
           totalItems,
           totalPages,
-          currentPage: page
+          currentPage: page,
         });
       } else {
         res.send("No incident found with ID: " + incNumber);
