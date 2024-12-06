@@ -1,3 +1,14 @@
+![01](https://github.com/user-attachments/assets/f303c23f-a26c-4d61-8ce8-cf91b88dc8b9)
+This is the main login page for the IT MGMT portal.
+![02](https://github.com/user-attachments/assets/175d979b-1693-4db3-a7d6-868173d7dd36)
+Once logged in, this screen will be presented.
+![03](https://github.com/user-attachments/assets/9800ab8e-cf45-450b-9afd-9c0fb5e95399)
+You can create incident here.
+![04](https://github.com/user-attachments/assets/19635237-8cf7-4537-842a-bf8ccc1de7cd)
+Here you can search for incidents that have been created.
+![05](https://github.com/user-attachments/assets/2db84514-a2b9-44a1-8ad7-8acf613fe4cd)
+This will show all of the incidents in list and pages.
+
 That's great to hear that you've built a Node.js app for creating and searching incident tickets! There are several features you can implement to enhance the functionality of your application. Below are some ideas, organized into **basic enhancements**, **intermediate improvements**, and **advanced features**.
 
 ### **Basic Enhancements**
