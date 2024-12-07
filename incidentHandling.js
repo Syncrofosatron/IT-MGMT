@@ -24,14 +24,15 @@ app.set("view engine", "ejs");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname))); // Serve static files
+// Serve static files
+app.use(express.static(path.join(__dirname)));
 
 app.use(session({
-  secret: 'your_secret_key', // Secret key to sign the session ID cookie
-  resave: false,             // Prevent session from being saved if unmodified
-  saveUninitialized: true,   // Save uninitialized session (new session)
+  secret: 'put_some_secret_key',
+  resave: false,
+  saveUninitialized: true,
   cookie: { 
-    maxAge: 1 * 60 * 1000  // Set session expiry time
+    maxAge: 1 * 60 * 1000
   }
 }));
 
@@ -42,16 +43,20 @@ app.post("/incident-login", function (req, res) {
   if (user && pass) {
     req.session.user = user;
     console.log(`User ${username} logged in successfully!`);
-    res.sendFile(__dirname + "/incidentPortal.html"); // Redirect to index page if login is successful
+    res.sendFile(__dirname + "/incidentPortal.html");
   } else {
     console.log("Invalid username or password");
-    res.redirect("/index-incorrect-creds.html"); // Redirect back to login page on failure
+    // Redirect back to the login page if login is unsuccessful.
+    // Note this is a same file as "incidentPortal.html" but just contains error info which
+    // states if password or username is wrong. I will see how can I show in the same page later.
+    res.redirect("/index-incorrect-creds.html");
   }
 });
 
 app.get("/incident-create", function (req, res) {
+  // This will redirect back to login page if session is no longer there.
   if (!req.session.user) {
-    return res.redirect("/index.html"); // Redirect to login if no session
+    return res.redirect("/index.html");
   }
   incidentNumber = `INC${myVariable.toString().padStart(6, "0")}`;
 
@@ -62,20 +67,20 @@ app.get("/incident-create", function (req, res) {
       return res.status(500).send("Error reading file");
     }
 
-    // Check if the incidentNumber already exists in the data
+    // To check if the incidentNumber already exists in the data or not.
     while (data.includes(incidentNumber)) {
       myVariable++;
       incidentNumber = `INC${myVariable.toString().padStart(6, "0")}`;
     }
 
-    // Render the page after determining the correct incidentNumber
+    // Render the page after determining the correct incidentNumber.
     res.render("incidentCreate", { incidentNumber });
   });
 });
 
 app.get("/incident-edit", function (req, res) {
   if (!req.session.user) {
-    return res.redirect("/index.html"); // Redirect to login if no session
+    return res.redirect("/index.html");
   }
   var incNumber = incidentNumberEdit;
   const directoryPath = "D:/WebDev/IT Mgmt alt/";
@@ -106,7 +111,7 @@ app.get("/incident-edit", function (req, res) {
 
 app.get("/incident-edit-list", function (req, res) {
   if (!req.session.user) {
-    return res.redirect("/index.html"); // Redirect to login if no session
+    return res.redirect("/index.html");
   }
   var incNumber = req.query.incidentNumber;
   const directoryPath = "D:/WebDev/IT Mgmt alt/";
@@ -137,7 +142,7 @@ app.get("/incident-edit-list", function (req, res) {
 
 app.post("/incident-edit", function (req, res) {
   if (!req.session.user) {
-    return res.redirect("/index.html"); // Redirect to login if no session
+    return res.redirect("/index.html");
   }
   const incidentData = {
     incidentNumber: incidentNumberEdit,
@@ -152,15 +157,15 @@ app.post("/incident-edit", function (req, res) {
     let jsonData = { INCIDENTS: {} };
 
     if (!err && data) {
-      jsonData = JSON.parse(data); // Parse existing data if it exists
+      jsonData = JSON.parse(data);
     }
     console.log("jsonData" + jsonData);
 
-    // Add the new incident to the INCIDENTS object
+    // Add the new incident to the INCIDENTS object.
     jsonData[incidentNumberEdit] = incidentData;
     console.log("jsonData[incidentNumber]" + jsonData[incidentNumber]);
 
-    // Convert the updated JSON data to a formatted string
+    // Convert the updated JSON data to a formatted string.
     const updatedJson = JSON.stringify(jsonData, null, 2);
     console.log("updatedJson" + updatedJson);
 
@@ -243,16 +248,16 @@ app.post("/incident-create", (req, res) => {
     let jsonData = { INCIDENTS: {} };
 
     if (!err && data) {
-      jsonData = JSON.parse(data); // Parse existing data if it exists
+      jsonData = JSON.parse(data);
     }
 
-    // Add the new incident to the INCIDENTS object
+    // Add the new incident to the INCIDENTS object.
     jsonData[incidentNumber] = incidentData;
 
-    // Convert the updated JSON data to a formatted string
+    // Stringify the updated JSON data for a formatted string.
     const updatedJson = JSON.stringify(jsonData, null, 2);
 
-    // Write the updated JSON data to the file
+    // Write the updated JSON data to the file.
     fs.writeFile(filePath, updatedJson, "utf8", (err) => {
       if (err) {
         console.error("Error writing to file:", err);
@@ -303,7 +308,7 @@ app.post("/incident-logout", function(req, res)
     if (err) {
         return res.status(500).send('Error while logging out');
     }
-    res.redirect('/index.html'); // Redirect to login page after session is destroyed
+    res.redirect('/index.html');
 });
 });
 
